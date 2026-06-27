@@ -634,6 +634,76 @@
             transform: scale(1.1);
         }
 
+        /* FAQ Section */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .faq-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--hover-transition);
+            overflow: hidden; /* For smooth height transition */
+        }
+
+        .faq-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3), 0 0 18px var(--glow-color);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-color-light);
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: var(--medium-blue); /* Slightly darker on hover */
+        }
+
+        .faq-question .icon {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-left: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question .icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 25px 20px;
+            font-size: 1.05rem;
+            color: var(--text-color-fade);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Max height to allow transition, adjust as needed */
+            padding: 0 25px 20px; /* Restore padding when active */
+        }
+
         /* Contact Section */
         .contact-section {
             text-align: center;
@@ -789,6 +859,21 @@
                 font-size: 1.2rem;
                 margin-right: 10px;
             }
+            /* Mobile adjustments for FAQ */
+            .faq-question {
+                font-size: 1.05rem;
+                padding: 18px 20px;
+            }
+            .faq-question .icon {
+                font-size: 1.3rem;
+            }
+            .faq-answer {
+                font-size: 0.95rem;
+                padding: 0 20px 18px;
+            }
+            .faq-item.active .faq-answer {
+                padding: 0 20px 18px;
+            }
             .contact-section .contact-cta {
                 font-size: 1.3rem;
             }
@@ -882,6 +967,21 @@
                 font-size: 0.95rem;
                 padding: 15px;
             }
+            /* Mobile adjustments for FAQ */
+            .faq-question {
+                font-size: 0.95rem;
+                padding: 15px;
+            }
+            .faq-question .icon {
+                font-size: 1.1rem;
+            }
+            .faq-answer {
+                font-size: 0.85rem;
+                padding: 0 15px 15px;
+            }
+            .faq-item.active .faq-answer {
+                padding: 0 15px 15px;
+            }
             .contact-section .contact-cta {
                 font-size: 1.1rem;
             }
@@ -894,10 +994,10 @@
             <a href="#" class="logo">Enes Aşcı</a>
             <ul>
                 <li><a href="#hakkimda">Hakkımda</a></li>
-                <li><a href="#tech-stack">Tech Stack</a></li>
                 <li><a href="#tech-gallery">Teknolojiler</a></li>
                 <li><a href="#projeler">Projeler</a></li>
                 <li><a href="#hizmetler">Ne Yapabilirim?</a></li>
+                <li><a href="#sss">SSS</a></li>
                 <li><a href="#iletisim">İletişim</a></li>
             </ul>
         </nav>
@@ -924,17 +1024,7 @@
             <p>Özellikle marketplace, e-ticaret, ödeme, kargo, iade, raporlama, monitoring ve otomasyon gibi gerçek dünya problemlerinde derinlemesine deneyime sahibim. Mimari tasarımından performansa, loglamadan hata analizine kadar geniş bir yelpazede sürdürülebilir ve güvenilir sistemler kurmaya odaklanıyorum. Hedefim, sadece çalışan değil, aynı zamanda kolayca yönetilebilir ve büyütülebilir yazılım çözümleri üretmek.</p>
         </section>
 
-        <section id="tech-stack" class="section tech-stack-section">
-            <h2>Tech Stack</h2>
-            <div class="tech-grid">
-                <div class="tech-item"><span>.NET, C#, ASP.NET Core, EF Core</span></div>
-                <div class="tech-item"><span>PostgreSQL, MSSQL, MongoDB</span></div>
-                <div class="tech-item"><span>RabbitMQ, Kafka, Hangfire</span></div>
-                <div class="tech-item"><span>Docker, GitHub/GitLab, CI/CD</span></div>
-                <div class="tech-item"><span>Redis, Elasticsearch/OpenSearch</span></div>
-                <div class="tech-item"><span>Payment APIs, Cargo APIs, E-Invoice</span></div>
-            </div>
-        </section>
+        
 
         <section id="tech-gallery" class="section tech-gallery-section">
             <h2>Kullandığımız Teknolojiler</h2>
@@ -1039,6 +1129,57 @@
                 <li>Log, monitoring ve edge-case senaryolarını asla boş bırakmam, sistemin nabzını tutarım.</li>
                 <li>Sadece çalışan değil, aynı zamanda sürdürülebilir, yönetilebilir ve değer üreten sistemler geliştiririm.</li>
             </ul>
+        </section>
+
+        <section id="sss" class="section faq-section">
+            <h2>Sıkça Sorulan Sorular</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Backend Developer olarak ne tür projelerde çalışıyorsunuz?
+                        <span class="icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        Özellikle e-ticaret, marketplace altyapıları, ödeme sistemleri, kargo/iade entegrasyonları, raporlama ve AI destekli otomasyon sistemleri gibi iş süreçlerini doğrudan etkileyen projelerde çalışıyorum. Sağlam, ölçeklenebilir ve güvenilir backend çözümleri geliştirmeye odaklanırım.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Hangi teknolojileri kullanıyorsunuz?
+                        <span class="icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        Başlıca .NET Core (C#), PostgreSQL, Redis, RabbitMQ, Docker, Kubernetes gibi teknolojilerle çalışıyorum. Bulut platformları olarak Azure ve AWS'yi kullanıyorum. Frontend tarafında temel düzeyde HTML, CSS, JavaScript bilgim mevcut ancak odak noktam backend geliştirme üzerinedir.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Sadece backend tarafında mı hizmet veriyorsunuz?
+                        <span class="icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        Evet, temel olarak backend geliştirme konusunda uzmanım. Ancak, projenin ihtiyacına göre entegrasyonlar, API tasarımları ve genel sistem mimarisi konularında uçtan uca danışmanlık da sağlayabilirim. Frontend ekibiyle uyumlu çalışacak sağlam API'ler geliştirmek ana hedefimdir.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Proje süreçleriniz nasıl işliyor?
+                        <span class="icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        Öncelikle projenin kapsamını ve hedeflerini derinlemesine anlarız. Ardından detaylı mimari tasarım ve teknoloji seçimi yaparız. Çevik metodolojilerle (Agile) ilerleyerek düzenli geri bildirimlerle şeffaf bir geliştirme süreci yürütürüm. Test, deploy ve monitoring adımlarına büyük önem veririm.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Referans projelerinizi görebilir miyim?
+                        <span class="icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        "Öne Çıkan Projelerim" bölümünde bazı önemli projelerimden bahsediyorum. Detaylı bilgi veya spesifik referanslar için benimle <a href="#iletisim">iletişime geçebilirsiniz</a>. Gizlilik anlaşmaları gereği tüm detayları açıkça paylaşamasam da genel yaklaşımlarım ve teknoloji kullanımlarım hakkında bilgi verebilirim.
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="iletisim" class="section contact-section">
@@ -1155,6 +1296,32 @@
                     link.classList.remove('active');
                 });
             }
+        });
+
+        // FAQ Accordion Functionality
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.closest('.faq-item');
+                const answer = faqItem.querySelector('.faq-answer');
+
+                // Toggle active class on clicked item
+                faqItem.classList.toggle('active');
+
+                // Toggle visibility and height for smooth animation
+                if (faqItem.classList.contains('active')) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px'; // Set max-height to scrollHeight for open animation
+                } else {
+                    answer.style.maxHeight = null; // Reset max-height for close animation
+                }
+
+                // Close other open FAQ items (optional, but good UX for accordions)
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem && item.classList.contains('active')) {
+                        item.classList.remove('active');
+                        item.querySelector('.faq-answer').style.maxHeight = null;
+                    }
+                });
+            });
         });
     </script>
 </body>
