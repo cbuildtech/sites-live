@@ -1,58 +1,1161 @@
-
-<!DOCTYPE html>
-<html lang="tr">
-<head>
+<!doctype html><html lang="tr"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z Coffee - Demo Site</title>
+    <title>Enes Aşcı - Backend Developer</title>
+    <meta name="description" content="Enes Aşcı - Backend tarafında sağlam, ölçeklenebilir ve gerçek iş çözen sistemler geliştiriyorum. .NET, marketplace mimarileri, ödeme sistemleri ve AI destekli otomasyonlarla fikirleri çalışan ürünlere dönüştürüyorum.">
+    <meta property="og:title" content="Enes Aşcı - Backend Developer">
+    <meta property="og:description" content="Enes Aşcı - Backend tarafında sağlam, ölçeklenebilir ve gerçek iş çözen sistemler geliştiriyorum. .NET, marketplace mimarileri, ödeme sistemleri ve AI destekli otomasyonlarla fikirleri çalışan ürünlere dönüştürüyorum.">
+    <meta property="og:url" content="https://enesasci.com">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://enesasci.com/og-image.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
+        :root {
+            --dark-blue: #0A0F1F;
+            --medium-blue: #1A213D;
+            --light-blue: #2E3A59;
+            --accent-color: #7B68EE; /* Soft purple */
+            --text-color-light: #E0E0E0;
+            --text-color-fade: #A0A0A0;
+            --gradient-start: #0F162A;
+            --gradient-end: #0A0F1F;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glow-color: rgba(123, 104, 238, 0.4);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --hover-transition: all 0.3s ease-in-out;
+        }
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1f1c2c, #928DAB);
-            color: white;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--text-color-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Sticky Header */
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--dark-blue);
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: var(--hover-transition);
+        }
+
+        .sticky-header nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .sticky-header .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-decoration: none;
+            position: relative;
+        }
+        .sticky-header .logo::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-color), transparent);
+            opacity: 0.7;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        .sticky-header .logo:hover::after {
+            transform: scaleX(1);
+        }
+
+
+        .sticky-header ul {
+            list-style: none;
+            display: flex;
+        }
+
+        .sticky-header ul li {
+            margin-left: 30px;
+        }
+
+        .sticky-header ul li a {
+            color: var(--text-color-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+            position: relative;
+            padding-bottom: 5px;
+            transition: var(--hover-transition);
+        }
+
+        .sticky-header ul li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .sticky-header ul li a:hover,
+        .sticky-header ul li a.active {
+            color: var(--accent-color);
+        }
+
+        .sticky-header ul li a:hover::after,
+        .sticky-header ul li a.active::after {
+            transform: scaleX(1);
+        }
+
+        main {
+            flex: 1;
+            padding-top: 100px; /* Offset for sticky header */
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
-        .hero {
-            margin-top: 100px;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            max-width: 800px;
+
+        .section {
             width: 90%;
+            max-width: 1200px;
+            margin-bottom: 80px;
+            padding: 50px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--card-shadow);
+            position: relative; /* For scroll reveal */
+            opacity: 0; /* Hidden by default for scroll reveal */
+            transform: translateY(20px); /* Slightly down by default */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        h1 {
+        .section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section h2 {
             font-size: 3rem;
-            margin-bottom: 10px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--accent-color);
+            text-shadow: 0 0 15px var(--glow-color);
+            position: relative;
         }
-        p {
-            font-size: 1.2rem;
-            opacity: 0.8;
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            border-radius: 2px;
         }
-        .contact {
-            margin-top: 30px;
+
+
+        /* Hero Section */
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: calc(100vh - 100px); /* Adjusted for header */
+            padding: 80px 20px;
+            background: none; /* Hero doesn't need glass effect here */
+            box-shadow: none;
+            border: none;
+            opacity: 1; /* Hero is always visible */
+            transform: none;
+            width: 100%; /* Take full width for inner content */
+            margin-bottom: 0;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-section h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(90deg, var(--accent-color), #A38FFD, #C9BBFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 25px var(--glow-color);
+        }
+
+        .hero-section p {
+            font-size: 1.7rem;
+            color: var(--text-color-fade);
+            margin-bottom: 40px;
+            max-width: 800px;
+            font-weight: 300;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 18px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--hover-transition);
+            border: 2px solid var(--accent-color);
+            background: transparent;
+            color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(123, 104, 238, 0.2);
+        }
+
+        .btn.primary {
+            background: linear-gradient(45deg, var(--accent-color), #A38FFD);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 0 20px var(--glow-color), 0 0 40px rgba(123, 104, 238, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px var(--glow-color);
+        }
+
+        .btn.primary:hover {
+            box-shadow: 0 8px 30px var(--glow-color), 0 0 60px rgba(123, 104, 238, 0.4);
+        }
+
+        .hero-visual {
+            width: 500px;
+            height: 300px;
+            background: var(--medium-blue);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(123, 104, 238, 0.3);
+            border: 1px solid var(--glass-border);
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #4CAF50; /* Terminal green */
+            font-size: 1rem;
+            text-align: left;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.2);
+            line-height: 1.4;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-visual::before {
+            content: 'user@server:~ $ cd /projects/backend-service\nuser@server:~ $ git pull origin main\nAlready up to date.\nuser@server:~ $ dotnet run\n[10:30:05] Starting API...\n[10:30:06] Listening on http://localhost:5000\n[10:30:07] Connected to PostgreSQL...\n[10:30:08] RabbitMQ consumer started...';
+            white-space: pre;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            opacity: 0.8;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 15px;
+            overflow: hidden;
+        }
+        .hero-visual::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(to top, var(--medium-blue), transparent);
+        }
+        @media (min-width: 768px) {
+            .hero-content {
+                flex-direction: row;
+                text-align: left;
+            }
+            .hero-text {
+                align-items: flex-start;
+                padding-right: 40px;
+            }
+            .hero-section h1 {
+                font-size: 4.5rem;
+            }
+            .hero-section p {
+                font-size: 1.4rem;
+                max-width: none;
+            }
+            .cta-buttons {
+                justify-content: flex-start;
+            }
+            .hero-visual {
+                margin-top: 0;
+            }
+        }
+        @media (max-width: 1024px) {
+            .hero-section h1 {
+                font-size: 3.5rem;
+            }
+            .hero-section p {
+                font-size: 1.3rem;
+            }
+            .hero-visual {
+                width: 90%;
+                max-width: 400px;
+                height: 250px;
+            }
+        }
+
+
+        /* About Section */
+        .about-section p {
+            font-size: 1.15rem;
+            color: var(--text-color-fade);
+            margin-bottom: 20px;
+            text-align: center;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Tech Stack & Projects & Services Section common card styles */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--card-shadow);
+            padding: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: var(--hover-transition);
+            transform: translateZ(0); /* For perspective */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(123, 104, 238, 0.1) 0%, transparent 70%);
+            transform: rotate(0deg);
+            transition: transform 0.5s ease-out;
+            z-index: 0;
+        }
+
+        .card:hover::before {
+            transform: rotate(360deg);
+        }
+
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px var(--glow-color);
+        }
+
+        .card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px rgba(123, 104, 238, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: var(--text-color-fade);
+            margin-bottom: 15px;
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card .tag {
+            background-color: var(--medium-blue);
+            color: var(--text-color-light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--light-blue);
+            white-space: nowrap;
+        }
+        .card .tag.accent {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+            box-shadow: 0 0 10px rgba(123, 104, 238, 0.4);
+        }
+
+        /* Tech Stack */
+        .tech-stack-section .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .tech-item {
+            background-color: var(--medium-blue);
             border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color-light);
+            border: 1px solid var(--light-blue);
+            transition: var(--hover-transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .tech-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, var(--glow-color) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease-out;
+            z-index: 0;
+        }
+        .tech-item:hover::before {
+            opacity: 0.2;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--accent-color);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--glow-color);
+        }
+        .tech-item span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Tech Gallery Section (New) */
+        .tech-gallery-section {
+            padding: 50px 0; /* Adjust padding as needed, section already has its own */
+        }
+
+        .tech-slider-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            mask-image: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+        }
+
+        .tech-slider-track {
+            display: flex;
+            width: fit-content; /* Allow content to dictate width */
+            animation: scroll-left 40s linear infinite; /* Adjust duration as needed */
+            will-change: transform; /* Optimize for animation */
+        }
+
+        .tech-logo-item {
+            flex-shrink: 0;
+            width: 150px; /* Fixed width for each item */
+            margin: 0 20px; /* Spacing between items */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 15px 10px;
+            background: var(--medium-blue);
+            border-radius: 15px;
+            border: 1px solid var(--light-blue);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: var(--hover-transition);
+            color: var(--text-color-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: default; /* Not interactive */
+        }
+
+        .tech-logo-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .tech-logo-item:hover {
+            transform: translateY(-8px) scale(1.03);
+            border-color: var(--accent-color);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), 0 0 20px var(--glow-color);
+        }
+
+        .tech-logo-item:hover img {
+            transform: scale(1.1);
+        }
+
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-50%); /* Scroll exactly half of the duplicated content */
+            }
+        }
+
+        /* Pause animation on hover */
+        .tech-slider-container:hover .tech-slider-track {
+            animation-play-state: paused;
+        }
+
+        /* Services & Approach */
+        .service-list, .approach-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .service-list li, .approach-list li {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            padding: 20px 25px;
+            font-size: 1.2rem;
+            color: var(--text-color-light);
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--hover-transition);
+            position: relative;
+            overflow: hidden;
+            font-weight: 300;
+        }
+        .service-list li::before, .approach-list li::before {
+            content: '✓';
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-right: 15px;
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--glow-color);
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-list li:hover, .approach-list li:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3), 0 0 18px var(--glow-color);
+        }
+        .service-list li:hover::before, .approach-list li:hover::before {
+            transform: scale(1.1);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            text-align: center;
+        }
+
+        .contact-section .contact-cta {
+            font-size: 1.6rem;
+            color: var(--text-color-light);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            display: inline-flex;
+            align-items: center;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background: var(--medium-blue);
+            border: 2px solid var(--light-blue);
+            transition: var(--hover-transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .contact-links a:hover {
+            transform: translateY(-5px);
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 8px 20px var(--glow-color);
+        }
+
+        /* Footer */
+        .footer {
+            width: 100%;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: var(--dark-blue);
+            color: var(--text-color-fade);
+            font-size: 0.9rem;
+            margin-top: auto; /* Push footer to bottom */
+            box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .sticky-header nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .sticky-header .logo {
+                margin-bottom: 15px;
+            }
+            .sticky-header ul {
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+                margin-top: 10px;
+            }
+            .sticky-header ul li {
+                margin: 10px 0;
+            }
+
+            .hero-section h1 {
+                font-size: 3rem;
+            }
+            .hero-section p {
+                font-size: 1.2rem;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            .hero-visual {
+                width: 100%;
+                height: 200px;
+                font-size: 0.8rem;
+                padding: 10px;
+            }
+            .hero-visual::before {
+                font-size: 0.8rem;
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                padding: 10px;
+            }
+
+
+            .section {
+                padding: 30px 20px;
+                margin-bottom: 50px;
+            }
+            .section h2 {
+                font-size: 2.2rem;
+                margin-bottom: 40px;
+            }
+
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            .card {
+                padding: 25px;
+            }
+            .card h3 {
+                font-size: 1.4rem;
+            }
+            .card p {
+                font-size: 0.95rem;
+            }
+            .tech-stack-section .tech-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+            .tech-item {
+                font-size: 0.9rem;
+                padding: 15px;
+            }
+            /* Mobile adjustments for tech gallery (New) */
+            .tech-logo-item {
+                width: 120px;
+                margin: 0 15px;
+                padding: 10px 5px;
+                font-size: 0.85rem;
+            }
+            .tech-logo-item img {
+                width: 50px;
+                height: 50px;
+            }
+            .tech-slider-track {
+                animation-duration: 30s; /* Faster scroll for less items visible */
+            }
+
+            .service-list li, .approach-list li {
+                font-size: 1rem;
+                padding: 18px 20px;
+            }
+            .service-list li::before, .approach-list li::before {
+                font-size: 1.2rem;
+                margin-right: 10px;
+            }
+            .contact-section .contact-cta {
+                font-size: 1.3rem;
+            }
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            .contact-links a {
+                width: 80%;
+                max-width: 280px;
+                font-size: 1rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .sticky-header nav {
+                padding: 0 10px;
+            }
+            .sticky-header .logo {
+                font-size: 1.5rem;
+            }
+            .sticky-header ul li {
+                margin: 8px 0;
+            }
+            .sticky-header ul li a {
+                font-size: 0.95rem;
+            }
+
+            .hero-section {
+                padding: 60px 15px;
+            }
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                padding: 15px 25px;
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 25px 15px;
+                margin-bottom: 40px;
+            }
+            .section h2 {
+                font-size: 1.8rem;
+                margin-bottom: 30px;
+            }
+            .section h2::after {
+                width: 60px;
+                bottom: -15px;
+            }
+
+            .card h3 {
+                font-size: 1.25rem;
+            }
+            .card p {
+                font-size: 0.9rem;
+            }
+            .card .tag {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .tech-stack-section .tech-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 15px;
+            }
+            .tech-item {
+                font-size: 0.85rem;
+                padding: 12px;
+            }
+            /* Mobile adjustments for tech gallery (New) */
+            .tech-logo-item {
+                width: 100px;
+                margin: 0 10px;
+                padding: 8px 5px;
+                font-size: 0.75rem;
+            }
+            .tech-logo-item img {
+                width: 40px;
+                height: 40px;
+            }
+            .tech-slider-track {
+                animation-duration: 25s;
+            }
+
+            .service-list li, .approach-list li {
+                font-size: 0.95rem;
+                padding: 15px;
+            }
+            .contact-section .contact-cta {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <h1>Z Coffee</h1>
-        <p>İstanbul, Ümraniye</p>
-        <div class="contact">
-            <p>📍 Atatürk, Alemdağ Cd no: 107/B, 34764 Ümraniye/İstanbul </p>
-            <p>📞 05375987241</p>
-        </div>
-        <p><i>(Bu, geçerli bir API anahtarı olmadığında oluşturulan dummy bir sayfadır.)</i></p>
-    </div>
+    <header class="sticky-header">
+        <nav>
+            <a href="#" class="logo">Enes Aşcı</a>
+            <ul>
+                <li><a href="#hakkimda">Hakkımda</a></li>
+                <li><a href="#tech-stack">Tech Stack</a></li>
+                <li><a href="#tech-gallery">Teknolojiler</a></li>
+                <li><a href="#projeler">Projeler</a></li>
+                <li><a href="#hizmetler">Ne Yapabilirim?</a></li>
+                <li><a href="#iletisim">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Fikirlerinizi Dijitalin Her Köşesinde Hayata Geçiren, Uçtan Uca Çözümler Geliştiriyorum.</h1>
+                    <p>Web'den mobil uygulamalara, sağlam backend altyapılarından sezgisel frontend arayüzlerine kadar, modern teknolojilerle ölçeklenebilir ve değer yaratan ürünler inşa ediyorum.</p>
+                    <div class="cta-buttons">
+                        <a href="#projeler" class="btn">Projelerimi Gör</a>
+                        <a href="#iletisim" class="btn primary">İletişime Geç</a>
+                    </div>
+                </div>
+                <div class="hero-visual"></div>
+            </div>
+        </section>
+
+        <section id="hakkimda" class="section about-section">
+            <h2>Hakkımda</h2>
+            <p>Merhaba ben Enes Aşcı, Ümraniye, İstanbul'da yaşayan bir Backend Developer'ım. Sadece kod yazan biri değil; ürünü, operasyonu, ölçeklenebilirliği, entegrasyonu ve canlı sistem problemlerini düşünen bir geliştiriciyim. Projelerimde uçtan uca çözümler sunarak fikirlerin hayata geçmesini sağlamayı seviyorum.</p>
+            <p>Özellikle marketplace, e-ticaret, ödeme, kargo, iade, raporlama, monitoring ve otomasyon gibi gerçek dünya problemlerinde derinlemesine deneyime sahibim. Mimari tasarımından performansa, loglamadan hata analizine kadar geniş bir yelpazede sürdürülebilir ve güvenilir sistemler kurmaya odaklanıyorum. Hedefim, sadece çalışan değil, aynı zamanda kolayca yönetilebilir ve büyütülebilir yazılım çözümleri üretmek.</p>
+        </section>
+
+        <section id="tech-stack" class="section tech-stack-section">
+            <h2>Tech Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-item"><span>.NET, C#, ASP.NET Core, EF Core</span></div>
+                <div class="tech-item"><span>PostgreSQL, MSSQL, MongoDB</span></div>
+                <div class="tech-item"><span>RabbitMQ, Kafka, Hangfire</span></div>
+                <div class="tech-item"><span>Docker, GitHub/GitLab, CI/CD</span></div>
+                <div class="tech-item"><span>Redis, Elasticsearch/OpenSearch</span></div>
+                <div class="tech-item"><span>Payment APIs, Cargo APIs, E-Invoice</span></div>
+            </div>
+        </section>
+
+        <section id="tech-gallery" class="section tech-gallery-section">
+            <h2>Kullandığımız Teknolojiler</h2>
+            <div class="tech-slider-container">
+                <div class="tech-slider-track">
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/dot-net.png" alt=".NET"><span>.NET</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/docker.png" alt="Docker"><span>Docker</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/postgresql.png" alt="PostgreSQL"><span>PostgreSQL</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/ios-filled/96/000000/github.png" alt="GitHub" style="filter: invert(1);"><span>GitHub</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/visual-studio-code-2019.png" alt="VS Code"><span>VS Code</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/redis.png" alt="Redis"><span>Redis</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/azure.png" alt="Azure"><span>Azure</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/amazon-web-services.png" alt="AWS"><span>AWS</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/kafka.png" alt="Kafka"><span>Kafka</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/rabbit-mq.png" alt="RabbitMQ"><span>RabbitMQ</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/kubernetes.png" alt="Kubernetes"><span>Kubernetes</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/microsoft-sql-server.png" alt="MSSQL"><span>MSSQL</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/mongodb.png" alt="MongoDB"><span>MongoDB</span></div>
+                    <!-- Duplicate items for continuous loop -->
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/dot-net.png" alt=".NET"><span>.NET</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/docker.png" alt="Docker"><span>Docker</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/postgresql.png" alt="PostgreSQL"><span>PostgreSQL</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/ios-filled/96/000000/github.png" alt="GitHub" style="filter: invert(1);"><span>GitHub</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/visual-studio-code-2019.png" alt="VS Code"><span>VS Code</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/redis.png" alt="Redis"><span>Redis</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/azure.png" alt="Azure"><span>Azure</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/amazon-web-services.png" alt="AWS"><span>AWS</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/kafka.png" alt="Kafka"><span>Kafka</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/rabbit-mq.png" alt="RabbitMQ"><span>RabbitMQ</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/kubernetes.png" alt="Kubernetes"><span>Kubernetes</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/microsoft-sql-server.png" alt="MSSQL"><span>MSSQL</span></div>
+                    <div class="tech-logo-item"><img src="https://img.icons8.com/color/96/000000/mongodb.png" alt="MongoDB"><span>MongoDB</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projeler" class="section projects-section">
+            <h2>Öne Çıkan Projelerim</h2>
+            <div class="grid-container">
+                <div class="card">
+                    <h3>AdilPazar Marketplace</h3>
+                    <p>Tam kapsamlı bir e-ticaret ve marketplace platformu. Ödeme sistemleri entegrasyonu, taksit, shopping credit, merchant yönetimi, sipariş, kargo, iade ve çeşitli harici entegrasyonlar içerir.</p>
+                    <div class="tags">
+                        <span class="tag accent">Marketplace</span>
+                        <span class="tag">Ödeme Sistemleri</span>
+                        <span class="tag">.NET</span>
+                        <span class="tag">Microservices</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>LeadFinder AI Lead Automation</h3>
+                    <p>Google Maps/Places üzerinden işletme lead'leri bulan, web sitesi olmayan firmaları tespit eden ve AI ile demo site üreten, WhatsApp satış akışı entegrasyonlu otomasyon sistemi.</p>
+                    <div class="tags">
+                        <span class="tag accent">AI Otomasyon</span>
+                        <span class="tag">Lead Generation</span>
+                        <span class="tag">Web Scraping</span>
+                        <span class="tag">.NET Core</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>CBuildTech Digital Systems</h3>
+                    <p>Web sitesi geliştirme, özel yazılım çözümleri ve AI destekli otomasyonlarla firmaların dijital dönüşüm ve büyüme süreçlerine destek olan bir platform.</p>
+                    <div class="tags">
+                        <span class="tag accent">Kurumsal Yazılım</span>
+                        <span class="tag">Web Development</span>
+                        <span class="tag">Dijital Büyüme</span>
+                        <span class="tag">Full Stack</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Önceki Yazılım Projeleri</h3>
+                    <p>HavBadi, Passionik ve Atomica gibi çeşitli endüstrilerde yer alan, farklı teknolojiler ve iş alanlarında deneyim kazandığım önceki yazılım projeleri.</p>
+                    <div class="tags">
+                        <span class="tag accent">Çeşitli Sektörler</span>
+                        <span class="tag">Ar-Ge</span>
+                        <span class="tag">Girişim</span>
+                        <span class="tag">Yazılım Geliştirme</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hizmetler" class="section services-section">
+            <h2>Ne Yapabilirim?</h2>
+            <ul class="service-list">
+                <li>Backend API geliştirme (RESTful, GraphQL)</li>
+                <li>Marketplace / e-commerce altyapısı kurulumu ve entegrasyonları</li>
+                <li>Ödeme sistemi entegrasyonları (yerel ve uluslararası)</li>
+                <li>AI destekli otomasyon sistemleri geliştirme</li>
+                <li>Admin panel / dashboard / raporlama çözümleri</li>
+                <li>Performans, loglama, monitoring ve hata analizi</li>
+                <li>Mevcut projelerde refactor ve mimari iyileştirme danışmanlığı</li>
+            </ul>
+        </section>
+
+        <section id="yaklasim" class="section approach-section">
+            <h2>Çalışma Yaklaşımım</h2>
+            <ul class="approach-list">
+                <li>Önce problemi derinlemesine anlar, çözümün temelini sağlam atarım.</li>
+                <li>Sonra sade, temiz ama gelecekte kolayca büyüyebilir bir mimari kurarım.</li>
+                <li>Canlı sistem risklerini, olası hataları ve güvenlik açıklarını önceden düşünürüm.</li>
+                <li>Log, monitoring ve edge-case senaryolarını asla boş bırakmam, sistemin nabzını tutarım.</li>
+                <li>Sadece çalışan değil, aynı zamanda sürdürülebilir, yönetilebilir ve değer üreten sistemler geliştiririm.</li>
+            </ul>
+        </section>
+
+        <section id="iletisim" class="section contact-section">
+            <h2>İletişim</h2>
+            <p class="contact-cta">Bir fikrin, ürünün ya da geliştirmek istediğin bir sistem varsa konuşalım.</p>
+            <div class="contact-links">
+                <a href="https://linkedin.com/in/enesasci" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://github.com/ensasci" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="mailto:enes.asci.dev@email.com">E-posta Gönder</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2023 Enes Aşcı. Tüm hakları saklıdır. Ümraniye, İstanbul.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = document.querySelector('.sticky-header').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - headerOffset - 20; // 20px additional padding
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+
+                    // Update active class for navigation
+                    document.querySelectorAll('.sticky-header ul li a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll Reveal Animation
+        const sections = document.querySelectorAll('.section');
+
+        const observerOptions = {
+            root: null, // viewport
+            rootMargin: '0px',
+            threshold: 0.1 // 10% of the section must be visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Stop observing once animated
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Initial active state for navigation based on URL hash (if any)
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash;
+            if (hash) {
+                const targetLink = document.querySelector(`.sticky-header ul li a[href="${hash}"]`);
+                if (targetLink) {
+                    targetLink.classList.add('active');
+                    // Scroll to target manually to account for sticky header on load
+                    const targetElement = document.querySelector(hash);
+                    if (targetElement) {
+                        const headerOffset = document.querySelector('.sticky-header').offsetHeight;
+                        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                        const offsetPosition = elementPosition - headerOffset - 20;
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "auto" // No smooth scroll on initial load
+                        });
+                    }
+                }
+            } else {
+                // If no hash, consider hero as active or no active link
+                // For this design, we can leave it unselected or set "Hakkımda" as default
+            }
+        });
+
+        // Highlight active nav link on scroll
+        window.addEventListener('scroll', () => {
+            let currentActive = null;
+            const headerHeight = document.querySelector('.sticky-header').offsetHeight;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - headerHeight - 30; // Adjusted for header and extra margin
+                const sectionBottom = sectionTop + section.offsetHeight;
+
+                if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionBottom) {
+                    currentActive = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.sticky-header ul li a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(currentActive)) {
+                    link.classList.add('active');
+                }
+            });
+            // Handle the case where the user is at the very top (Hero section)
+            if (window.pageYOffset < sections[0].offsetTop - headerHeight - 30) {
+                 document.querySelectorAll('.sticky-header ul li a').forEach(link => {
+                    link.classList.remove('active');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
